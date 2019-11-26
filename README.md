@@ -1,1 +1,1 @@
-# Stencil
+# Stencil Starter Application
