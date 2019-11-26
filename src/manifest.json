@@ -1,0 +1,13 @@
+{
+    "name": "Stencil",
+    "short_name": "Stencil",
+    "start_url": "/",
+    "display": "standalone",
+    "icons": [{
+      "src": "assets/icon/icon.png",
+      "sizes": "64x64",
+      "type": "image/png"
+    }],
+    "background_color": "#3880ff",
+    "theme_color": "#3880ff"
+  }
