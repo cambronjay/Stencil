@@ -13,6 +13,7 @@ export namespace Components {
   interface AppRoot {}
   interface MenuNav {}
   interface MenuTabs {}
+  interface ScreenLogin {}
 }
 
 declare global {
@@ -35,10 +36,17 @@ declare global {
     prototype: HTMLMenuTabsElement;
     new (): HTMLMenuTabsElement;
   };
+
+  interface HTMLScreenLoginElement extends Components.ScreenLogin, HTMLStencilElement {}
+  var HTMLScreenLoginElement: {
+    prototype: HTMLScreenLoginElement;
+    new (): HTMLScreenLoginElement;
+  };
   interface HTMLElementTagNameMap {
     'app-root': HTMLAppRootElement;
     'menu-nav': HTMLMenuNavElement;
     'menu-tabs': HTMLMenuTabsElement;
+    'screen-login': HTMLScreenLoginElement;
   }
 }
 
@@ -46,11 +54,15 @@ declare namespace LocalJSX {
   interface AppRoot {}
   interface MenuNav {}
   interface MenuTabs {}
+  interface ScreenLogin {
+    'onUserDidLogIn'?: (event: CustomEvent<any>) => void;
+  }
 
   interface IntrinsicElements {
     'app-root': AppRoot;
     'menu-nav': MenuNav;
     'menu-tabs': MenuTabs;
+    'screen-login': ScreenLogin;
   }
 }
 
@@ -63,6 +75,7 @@ declare module "@stencil/core" {
       'app-root': LocalJSX.AppRoot & JSXBase.HTMLAttributes<HTMLAppRootElement>;
       'menu-nav': LocalJSX.MenuNav & JSXBase.HTMLAttributes<HTMLMenuNavElement>;
       'menu-tabs': LocalJSX.MenuTabs & JSXBase.HTMLAttributes<HTMLMenuTabsElement>;
+      'screen-login': LocalJSX.ScreenLogin & JSXBase.HTMLAttributes<HTMLScreenLoginElement>;
     }
   }
 }

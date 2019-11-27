@@ -33,7 +33,11 @@ export class AuthController {
 
   async isLoggedIn(): Promise<boolean> {
     const value = await Storage.get('hasLoggedIn');
-    return value === true;
+    if(value === null) {
+      await Storage.set('hasLoggedIn', false);
+      return false;
+    }
+    return value;
   }
 
 }

@@ -34,7 +34,7 @@ export class AppRoot {
             ic: 'fetch'
         },
         {
-            title: 'FireBase',
+            title: 'Firebase',
             url: '/firebase',
             icon: 'flame',
             id: 'firebase'
@@ -83,7 +83,9 @@ export class AppRoot {
         if (this.isLargeScreen) {
             let start = this.startScreen.replace("/", "");
             this.nav = document.querySelector("#sideMenuNav");
-            this.nav.setRoot("screen-" + start);
+            if(this.loggedIn){
+                this.nav.setRoot("screen-" + start);
+            }
         }
 
         try {
@@ -112,7 +114,7 @@ export class AppRoot {
     renderRouter() {
         return (
             <ion-router useHash={false} id="ionicRouter">
-                <ion-route-redirect from="/" to={this.checkLoginStatus ? this.startScreen : '/login'} />
+                <ion-route-redirect from="/" to={this.loggedIn ? this.startScreen : '/login'} />
 
                 <ion-route component={!this.isLargeScreen ? "menu-tabs" : "menu-nav"}>
                     <ion-route url="/home" component={!this.isLargeScreen ? "tab-home" : "screen-home"}></ion-route>
@@ -120,40 +122,46 @@ export class AppRoot {
                     <ion-route url="/firebase" component={!this.isLargeScreen ? "tab-firebase" : "screen-firebase"}></ion-route>
                 </ion-route>
 
+                <ion-route url="/login" component="screen-login"></ion-route>
             </ion-router>
         );
+    }
+
+    renderMenu() {
+        if(this.loggedIn) {
+            <ion-split-pane content-id="menu-content" when="md">
+            <ion-menu content-id="menu-content" swipe-gesture={false} maxEdgeStart={0}>
+                <ion-header>
+                    <ion-toolbar>
+                        <ion-title>Navigate</ion-title>
+                    </ion-toolbar>
+                </ion-header>
+                <ion-content forceOverscroll={false}>
+                    <ion-list id="menuNav">
+                        <ion-list-header>Navigate</ion-list-header>
+
+                        {this.appPages.map((p) => (
+                            <ion-menu-toggle autoHide={false} id="menuItem">
+                                <ion-item href={p.url} detail={false}>
+                                    <ion-icon slot="start" name={p.icon} id={p.id + '-icon'} color="medium"></ion-icon>
+                                    <ion-label id={p.id + '-text'} color="medium">{p.title}</ion-label>
+                                </ion-item>
+                            </ion-menu-toggle>
+                        ))}
+                    </ion-list>
+
+                </ion-content>
+            </ion-menu>
+        </ion-split-pane>
+        }
     }
 
     render() {
         return (
             <ion-app>
                 {this.renderRouter()}
-                <ion-split-pane content-id="menu-content" when="md">
-                    <ion-menu content-id="menu-content" swipe-gesture={false} maxEdgeStart={0}>
-                        <ion-header>
-                            <ion-toolbar>
-                                <ion-title>Navigate</ion-title>
-                            </ion-toolbar>
-                        </ion-header>
-                        <ion-content forceOverscroll={false}>
-                            <ion-list id="menuNav">
-                                <ion-list-header>Navigate</ion-list-header>
-
-                                {this.appPages.map((p) => (
-                                    <ion-menu-toggle autoHide={false} id="menuItem">
-                                        <ion-item href={p.url} detail={false}>
-                                            <ion-icon slot="start" name={p.icon} id={p.id + '-icon'} color="medium"></ion-icon>
-                                            <ion-label id={p.id + '-text'} color="medium">{p.title}</ion-label>
-                                        </ion-item>
-                                    </ion-menu-toggle>
-                                ))}
-                            </ion-list>
-
-                        </ion-content>
-                    </ion-menu>
-
-                    <ion-router-outlet animated={false} id="menu-content"></ion-router-outlet>
-                </ion-split-pane>
+                {this.renderMenu()}
+                <ion-router-outlet animated={false} id="menu-content"></ion-router-outlet>
             </ion-app>
         );
     }

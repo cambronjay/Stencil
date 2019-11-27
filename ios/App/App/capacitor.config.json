@@ -1,0 +1,7 @@
+{
+    "appId": "io.stencil.app",
+    "appName": "Stencil",
+    "bundledWebRuntime": false,
+    "webDir": "www",
+    "npmClient": "npm"
+  }
