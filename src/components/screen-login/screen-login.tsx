@@ -1,4 +1,4 @@
-import { Component, Event, EventEmitter, Prop, State , h } from '@stencil/core';
+import { Component, Event, EventEmitter, Prop, State, h } from '@stencil/core';
 import { Auth } from '../../providers/auth';
 
 
@@ -44,7 +44,6 @@ export class PageLogin {
 
       return;
     }
-
     this.username = {
       ...this.username,
       valid: false
@@ -54,15 +53,12 @@ export class PageLogin {
   validatePassword() {
     if (this.password.value && this.password.value.length > 0) {
       this.password.valid = true;
-
       this.password = {
         ...this.password,
         valid: true
       };
-
       return;
     }
-
     this.password = {
       ...this.password,
       valid: false
@@ -71,69 +67,69 @@ export class PageLogin {
 
   async onLogin(e) {
     e.preventDefault();
+    e.stopPropagation();
     const navCtrl: HTMLIonRouterElement = await (this.nav as any).componentOnReady();
-
     this.validatePassword();
     this.validateUsername();
-
     this.submitted = true;
-
     if (this.password.valid && this.username.valid) {
       await Auth.login(this.username.value);
-
       this.userDidLogIn.emit({ loginStatus: true });
-      navCtrl.push('/schedule', 'root');
+      navCtrl.push('/screen-fetch', 'root');
     }
   }
 
-  async onSignup(e) {
+  async onSingleSignOn(e) {
     e.preventDefault();
-    const navCtrl: HTMLIonRouterElement = await (this.nav as any).componentOnReady();
-    navCtrl.push('/signup');
+    e.stopPropagation();
+
   }
 
   render() {
     return [
       <ion-content class="ion-padding" scrollX={false} scrollY={false}>
-        <div class="login-logo">
-          <img src="/assets/img/appicon.svg" alt="Ionic logo" />
-        </div>
+        <ion-grid>
+          <ion-row justify-content-center align-items-center class="row-fix">
+            <ion-col sizeMd="7" sizeLg="7" sizeXl="4">
+              <div class="logo">
+                <img src="/assets/img/logo.svg" alt="logo" />
+              </div>
+              <form novalidate="true" onSubmit={(e) => this.onLogin(e)}>
 
-        <form novalidate="true" onSubmit={(e) => this.onLogin(e)}>
-          <ion-list no-lines>
-            <ion-item>
-              <ion-label position="stacked" color="primary">Username</ion-label>
-              <ion-input name="username" type="text" value={this.username.value} onInput={(ev) => this.handleUsername(ev)} spellcheck={false} autocapitalize="off" required></ion-input>
-            </ion-item>
+                <ion-list no-lines>
+                  <ion-item>
+                    <ion-label position="stacked" color="primary">Username</ion-label>
+                    <ion-input name="username" type="text" value={this.username.value} onInput={(ev) => this.handleUsername(ev)} spellcheck={false} autocapitalize="off" required></ion-input>
+                  </ion-item>
 
-            <ion-text color="danger">
-              <p hidden={this.username.valid || this.submitted === false} class="ion-padding-left">
-                Username is required
-              </p>
-            </ion-text>
+                  <ion-text color="danger">
+                    <p hidden={this.username.valid || this.submitted === false} class="ion-padding-left">
+                      Username is required
+                      </p>
+                  </ion-text>
 
-            <ion-item>
-              <ion-label position="stacked" color="primary">Password</ion-label>
-              <ion-input name="password" type="password" value={this.password.value} onInput={(ev) => this.handlePassword(ev)} required></ion-input>
-            </ion-item>
+                  <ion-item>
+                    <ion-label position="stacked" color="primary">Password</ion-label>
+                    <ion-input name="password" type="password" value={this.password.value} onInput={(ev) => this.handlePassword(ev)} required></ion-input>
+                  </ion-item>
 
-            <ion-text color="danger">
-              <p hidden={this.password.valid || this.submitted === false} class="ion-padding-left">
-                Password is required
-              </p>
-            </ion-text>
-          </ion-list>
+                  <ion-text color="danger">
+                    <p hidden={this.password.valid || this.submitted === false} class="ion-padding-left">
+                      Password is required
+                      </p>
+                  </ion-text>
+                </ion-list>
 
-          <ion-row>
-            <ion-col>
-              <ion-button type="submit" expand="block">Login</ion-button>
-            </ion-col>
-            <ion-col>
-              <ion-button onClick={(e) => this.onSignup(e)} color="light" expand="block">Signup</ion-button>
+                <ion-row>
+                  <ion-col>
+                    <ion-button type="submit" expand="block">Login</ion-button>
+                    <ion-button class="ion-margin-top" onClick={(e) => this.onSingleSignOn(e)} color="light" expand="block">Single Sign-On</ion-button>
+                  </ion-col>
+                </ion-row>
+              </form>
             </ion-col>
           </ion-row>
-        </form>
-
+        </ion-grid>
       </ion-content>
 
     ];

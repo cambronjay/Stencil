@@ -1,13 +1,22 @@
-screen-login .login-logo {
-    padding: 20px 0;
-    min-height: 200px;
+screen-login .logo {
+    min-height: 100px;
     text-align: center;
 }
   
-screen-login .login-logo img {
+screen-login .logo img {
     max-width: 150px;
 }
   
 screen-login .list {
     margin-bottom: 0;
+}
+
+screen-login ion-grid {
+    height: 100% !important;
+}
+screen-login ion-row.row-fix{
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    height: 100% !important;
 }
