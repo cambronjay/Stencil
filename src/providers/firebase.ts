@@ -1,7 +1,12 @@
-import firebase from 'firebase/app';
+import { firebase } from '@firebase/app';
+import '@firebase/auth';
+import '@firebase/firestore';
+import '@firebase/functions';
+import '@firebase/performance';
 
 export class FirebaseController {
     public app: any;
+
     constructor() {
         this.app = firebase.initializeApp({ 
             apiKey: "AIzaSyCi4zDMAxTn_150lqOb7uc_LlgqPyUhvY4",
@@ -17,4 +22,4 @@ export class FirebaseController {
 
 }
 
-export const Auth = new FirebaseController();
+export const Firebase = new FirebaseController();

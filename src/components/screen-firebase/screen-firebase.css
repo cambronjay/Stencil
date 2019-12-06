@@ -1,0 +1,9 @@
+screen-firebase ion-grid {
+    height: 100% !important;
+}
+screen-firebase ion-row.row-fix{
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    height: 100% !important;
+}

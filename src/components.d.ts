@@ -13,6 +13,7 @@ export namespace Components {
   interface AppRoot {}
   interface MenuNav {}
   interface MenuTabs {}
+  interface ScreenFirebase {}
   interface ScreenLogin {}
 }
 
@@ -37,6 +38,12 @@ declare global {
     new (): HTMLMenuTabsElement;
   };
 
+  interface HTMLScreenFirebaseElement extends Components.ScreenFirebase, HTMLStencilElement {}
+  var HTMLScreenFirebaseElement: {
+    prototype: HTMLScreenFirebaseElement;
+    new (): HTMLScreenFirebaseElement;
+  };
+
   interface HTMLScreenLoginElement extends Components.ScreenLogin, HTMLStencilElement {}
   var HTMLScreenLoginElement: {
     prototype: HTMLScreenLoginElement;
@@ -46,6 +53,7 @@ declare global {
     'app-root': HTMLAppRootElement;
     'menu-nav': HTMLMenuNavElement;
     'menu-tabs': HTMLMenuTabsElement;
+    'screen-firebase': HTMLScreenFirebaseElement;
     'screen-login': HTMLScreenLoginElement;
   }
 }
@@ -54,6 +62,7 @@ declare namespace LocalJSX {
   interface AppRoot {}
   interface MenuNav {}
   interface MenuTabs {}
+  interface ScreenFirebase {}
   interface ScreenLogin {
     'onUserDidLogIn'?: (event: CustomEvent<any>) => void;
   }
@@ -62,6 +71,7 @@ declare namespace LocalJSX {
     'app-root': AppRoot;
     'menu-nav': MenuNav;
     'menu-tabs': MenuTabs;
+    'screen-firebase': ScreenFirebase;
     'screen-login': ScreenLogin;
   }
 }
@@ -75,6 +85,7 @@ declare module "@stencil/core" {
       'app-root': LocalJSX.AppRoot & JSXBase.HTMLAttributes<HTMLAppRootElement>;
       'menu-nav': LocalJSX.MenuNav & JSXBase.HTMLAttributes<HTMLMenuNavElement>;
       'menu-tabs': LocalJSX.MenuTabs & JSXBase.HTMLAttributes<HTMLMenuTabsElement>;
+      'screen-firebase': LocalJSX.ScreenFirebase & JSXBase.HTMLAttributes<HTMLScreenFirebaseElement>;
       'screen-login': LocalJSX.ScreenLogin & JSXBase.HTMLAttributes<HTMLScreenLoginElement>;
     }
   }

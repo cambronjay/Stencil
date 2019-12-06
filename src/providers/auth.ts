@@ -1,20 +1,20 @@
 import { Storage } from './storage';
-import { SalteAuth } from '@salte-auth/salte-auth';
+// import { SalteAuth } from '@salte-auth/salte-auth';
 
 export class AuthController {
 
   constructor(){
-    const auth = new SalteAuth({
-      providerUrl: 'https://intadfs.lgeenergy.int/adfs',
-      redirectUrl: {
-        loginUrl: 'https://intadfs.lgeenergy.int/adfs/oauth2/authorize/',
-        logoutUrl: 'https://intadfs.lgeenergy.int/adfs/oauth2/logout'
-      },
-      clientId: '',
-      responseType: 'code',
-      scope: 'openid allatclaims',
-      provider: 'auth0'
-    });
+    // const auth = new SalteAuth({
+    //   providerUrl: 'https://intadfs.lgeenergy.int/adfs',
+    //   redirectUrl: {
+    //     loginUrl: 'https://intadfs.lgeenergy.int/adfs/oauth2/authorize/',
+    //     logoutUrl: 'https://intadfs.lgeenergy.int/adfs/oauth2/logout'
+    //   },
+    //   clientId: '',
+    //   responseType: 'code',
+    //   scope: 'openid allatclaims',
+    //   provider: 'auth0'
+    // });
   }
 
   async login(username: string): Promise<void> {
