@@ -15,7 +15,7 @@ export interface Test {
 })
 export class ScreenFetch {
     @State() firstName: string = '';
-    @State() lastName: string = '';
+    @State() lastName: string = 'https://us-central1-stenciljs-4a2d3.cloudfunctions.net/LoadPictures';
     @State() age: number = 0;
     private document = Firebase.app.firestore().doc('test/AQBbsZUZ5mOlQwDOuWEV');
     private testObservable: Observable<any>;
