@@ -82,7 +82,7 @@ export class PageLogin {
   async onSingleSignOn(e) {
     e.preventDefault();
     e.stopPropagation();
-
+    await Auth.singleSignOn();
   }
 
   render() {

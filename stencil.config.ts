@@ -1,6 +1,10 @@
 import { Config } from '@stencil/core';
+import nodePolyfills from 'rollup-plugin-node-polyfills';
 
 export const config: Config = {
+  plugins: [
+    nodePolyfills()
+  ],
   commonjs: {
     namedExports: {
       'node_modules/idb/build/idb.js': ['openDb'],

@@ -13,7 +13,7 @@ export interface Test {
     tag: 'screen-firebase',
     styleUrl: 'screen-firebase.css',
 })
-export class PageLogin {
+export class ScreenFirebase {
     @State() firstName: string = '';
     @State() lastName: string = '';
     @State() age: number = 0;
@@ -26,14 +26,11 @@ export class PageLogin {
     }
 
     componentDidLoad() {
-        this.testSubscription = this.testObservable.subscribe(snapshot => {
-            console.log(snapshot.id);
-            console.log(snapshot.data());
-            this.firstName = snapshot.data().firstName;
-            this.lastName = snapshot.data().lastName;
-            this.age = snapshot.data().age;
+        this.testSubscription = this.testObservable.subscribe(data => {
+            this.firstName = data.data().firstName;
+            this.lastName = data.data().lastName;
+            this.age = data.data().age;
         });
-
     }
 
     componentDidUnload() {
