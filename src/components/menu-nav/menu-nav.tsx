@@ -13,10 +13,6 @@ export class MenuNav {
         if (currentScreen == null) {
             currentScreen = "home";
         }
-        const firstIcon = document.querySelector(`#${currentScreen}-icon`);
-        const firstText = document.querySelector(`#${currentScreen}-text`);
-        firstIcon.setAttribute("color", "primary");
-        firstText.setAttribute("color", "primary");
     }
 
     async componentDidLoad() {

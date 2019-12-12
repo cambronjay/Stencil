@@ -13,7 +13,9 @@ export namespace Components {
   interface AppRoot {}
   interface MenuNav {}
   interface MenuTabs {}
+  interface ScreenFetch {}
   interface ScreenFirebase {}
+  interface ScreenHome {}
   interface ScreenLogin {}
 }
 
@@ -38,10 +40,22 @@ declare global {
     new (): HTMLMenuTabsElement;
   };
 
+  interface HTMLScreenFetchElement extends Components.ScreenFetch, HTMLStencilElement {}
+  var HTMLScreenFetchElement: {
+    prototype: HTMLScreenFetchElement;
+    new (): HTMLScreenFetchElement;
+  };
+
   interface HTMLScreenFirebaseElement extends Components.ScreenFirebase, HTMLStencilElement {}
   var HTMLScreenFirebaseElement: {
     prototype: HTMLScreenFirebaseElement;
     new (): HTMLScreenFirebaseElement;
+  };
+
+  interface HTMLScreenHomeElement extends Components.ScreenHome, HTMLStencilElement {}
+  var HTMLScreenHomeElement: {
+    prototype: HTMLScreenHomeElement;
+    new (): HTMLScreenHomeElement;
   };
 
   interface HTMLScreenLoginElement extends Components.ScreenLogin, HTMLStencilElement {}
@@ -53,7 +67,9 @@ declare global {
     'app-root': HTMLAppRootElement;
     'menu-nav': HTMLMenuNavElement;
     'menu-tabs': HTMLMenuTabsElement;
+    'screen-fetch': HTMLScreenFetchElement;
     'screen-firebase': HTMLScreenFirebaseElement;
+    'screen-home': HTMLScreenHomeElement;
     'screen-login': HTMLScreenLoginElement;
   }
 }
@@ -62,7 +78,9 @@ declare namespace LocalJSX {
   interface AppRoot {}
   interface MenuNav {}
   interface MenuTabs {}
+  interface ScreenFetch {}
   interface ScreenFirebase {}
+  interface ScreenHome {}
   interface ScreenLogin {
     'onUserDidLogIn'?: (event: CustomEvent<any>) => void;
   }
@@ -71,7 +89,9 @@ declare namespace LocalJSX {
     'app-root': AppRoot;
     'menu-nav': MenuNav;
     'menu-tabs': MenuTabs;
+    'screen-fetch': ScreenFetch;
     'screen-firebase': ScreenFirebase;
+    'screen-home': ScreenHome;
     'screen-login': ScreenLogin;
   }
 }
@@ -85,7 +105,9 @@ declare module "@stencil/core" {
       'app-root': LocalJSX.AppRoot & JSXBase.HTMLAttributes<HTMLAppRootElement>;
       'menu-nav': LocalJSX.MenuNav & JSXBase.HTMLAttributes<HTMLMenuNavElement>;
       'menu-tabs': LocalJSX.MenuTabs & JSXBase.HTMLAttributes<HTMLMenuTabsElement>;
+      'screen-fetch': LocalJSX.ScreenFetch & JSXBase.HTMLAttributes<HTMLScreenFetchElement>;
       'screen-firebase': LocalJSX.ScreenFirebase & JSXBase.HTMLAttributes<HTMLScreenFirebaseElement>;
+      'screen-home': LocalJSX.ScreenHome & JSXBase.HTMLAttributes<HTMLScreenHomeElement>;
       'screen-login': LocalJSX.ScreenLogin & JSXBase.HTMLAttributes<HTMLScreenLoginElement>;
     }
   }

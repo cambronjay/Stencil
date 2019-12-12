@@ -1,9 +1,26 @@
-screen-firebase ion-grid {
-    height: 100% !important;
+.skeleton-50 {
+    width: 50%;
 }
-screen-firebase ion-row.row-fix{
-    display: flex !important;
+.skeleton-80 {
+    width: 80%;
+}
+.skeleton-30 {
+    width: 30%;
+}
+.skeleton-100 {
+    width: 100%;
+}
+.skeleton-70 {
+    width: 70%;
+}
+.loadError {
+    text-align: center !important;
+}
+ion-thumbnail.skeleton-card-image {
+    width: 100% !important;
+    height: 40vh !important;
+}
+.center-row { 
     align-items: center !important;
     justify-content: center !important;
-    height: 100% !important;
-}
+ }
