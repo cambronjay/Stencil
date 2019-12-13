@@ -1,7 +1,6 @@
 import { Component, Event, EventEmitter, Prop, State, h } from '@stencil/core';
 import { Auth } from '../../providers/auth';
 
-
 @Component({
   tag: 'screen-login',
   styleUrl: 'screen-login.css',
@@ -17,6 +16,7 @@ export class PageLogin {
   };
   @State() submitted = false;
   @Prop({ connect: 'ion-router' }) nav;
+  @Prop({ connect: 'ion-menu-controller' }) menuCtrl: HTMLIonMenuControllerElement;
   @Event() userDidLogIn: EventEmitter;
   handleUsername(ev) {
     this.validateUsername();
@@ -64,6 +64,16 @@ export class PageLogin {
       valid: false
     };
   }
+
+  async componentWillLoad() {
+    await Auth.logout();
+}
+
+
+  async componentDidLoad() {
+    const menuCtlr: HTMLIonMenuControllerElement = await (this.menuCtrl as any).componentOnReady();
+    menuCtlr.enable(false);
+}
 
   async onLogin(e) {
     e.preventDefault();

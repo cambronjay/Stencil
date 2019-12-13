@@ -17,8 +17,9 @@ export class AppRoot {
     @Prop({ context: 'isServer' }) isServer: boolean;
     @State() isLargeScreen = false;
     private router: HTMLIonRouterElement;
-    private startScreen: any;
+    @State() startScreen: any;
     private nav: HTMLIonNavElement;
+    @State() menuEnabled = false;
 
     appPages = [
         {
@@ -61,12 +62,12 @@ export class AppRoot {
             currentScreen = currentScreen.replace("/", "");
             await Storage.set("CurrentScreen", currentScreen);
         });
-
         try {
             await SplashScreen.hide();
         } catch {
             return;
         }
+
     }
 
     async checkLoginStatus() {
@@ -83,7 +84,6 @@ export class AppRoot {
     @Listen('userDidLogOut')
     updateLoggedInStatus(loggedEvent) {
         this.loggedIn = loggedEvent.detail.loginStatus;
-        console.log(this.loggedIn)
     }
 
     renderRouter() {
@@ -107,7 +107,7 @@ export class AppRoot {
             <ion-app>
                 {this.renderRouter()}
                 <ion-split-pane content-id="menu-content" when="md">
-                    <ion-menu content-id="menu-content" swipe-gesture={false} maxEdgeStart={0} disabled={!this.loggedIn || this.startScreen === '/login'}>
+                    <ion-menu content-id="menu-content" swipe-gesture={false} maxEdgeStart={0} disabled={!this.loggedIn}>
                         <ion-header>
                             <ion-toolbar>
                                 <ion-title>Navigate</ion-title>
