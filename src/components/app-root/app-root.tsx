@@ -18,7 +18,6 @@ export class AppRoot {
     @State() isLargeScreen = false;
     private router: HTMLIonRouterElement;
     @State() startScreen: any;
-    private nav: HTMLIonNavElement;
     @State() menuEnabled = false;
 
     appPages = [
