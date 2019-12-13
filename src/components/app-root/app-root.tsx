@@ -58,35 +58,9 @@ export class AppRoot {
             event.preventDefault();
             event.stopPropagation();
             let currentScreen = event.detail.to;
-            if (this.isLargeScreen) {
-                let toNavIcon = event.detail.to;
-                let toNavText = event.detail.to;
-                let fromNavIcon = event.detail.from;
-                let fromNavText = event.detail.from;
-                toNavIcon = toNavIcon.replace("/", "");
-                toNavText = toNavText.replace("/", "");
-                toNavIcon = document.querySelector(`#${toNavIcon}-icon`);
-                toNavText = document.querySelector(`#${toNavText}-text`);
-                fromNavIcon = fromNavIcon.replace("/", "");
-                fromNavText = fromNavText.replace("/", "");
-                fromNavIcon = document.querySelector(`#${fromNavIcon}-icon`);
-                fromNavText = document.querySelector(`#${fromNavText}-text`);
-                toNavIcon.setAttribute("color", "primary");
-                toNavText.setAttribute("color", "primary");
-                fromNavIcon.setAttribute("color", "medium");
-                fromNavText.setAttribute("color", "medium");
-
-            }
             currentScreen = currentScreen.replace("/", "");
             await Storage.set("CurrentScreen", currentScreen);
         });
-        if (this.isLargeScreen) {
-            let start = this.startScreen.replace("/", "");
-            this.nav = document.querySelector("#sideMenuNav");
-            if(this.loggedIn){
-                this.nav.setRoot("screen-" + start);
-            }
-        }
 
         try {
             await SplashScreen.hide();
@@ -109,6 +83,7 @@ export class AppRoot {
     @Listen('userDidLogOut')
     updateLoggedInStatus(loggedEvent) {
         this.loggedIn = loggedEvent.detail.loginStatus;
+        console.log(this.loggedIn)
     }
 
     renderRouter() {
@@ -127,41 +102,32 @@ export class AppRoot {
         );
     }
 
-    renderMenu() {
-        if(this.loggedIn) {
-            <ion-split-pane content-id="menu-content" when="md">
-            <ion-menu content-id="menu-content" swipe-gesture={false} maxEdgeStart={0}>
-                <ion-header>
-                    <ion-toolbar>
-                        <ion-title>Navigate</ion-title>
-                    </ion-toolbar>
-                </ion-header>
-                <ion-content forceOverscroll={false}>
-                    <ion-list id="menuNav">
-                        <ion-list-header>Navigate</ion-list-header>
-
-                        {this.appPages.map((p) => (
-                            <ion-menu-toggle autoHide={false} id="menuItem">
-                                <ion-item href={p.url} detail={false}>
-                                    <ion-icon slot="start" name={p.icon} id={p.id + '-icon'} color="medium"></ion-icon>
-                                    <ion-label id={p.id + '-text'} color="medium">{p.title}</ion-label>
-                                </ion-item>
-                            </ion-menu-toggle>
-                        ))}
-                    </ion-list>
-
-                </ion-content>
-            </ion-menu>
-        </ion-split-pane>
-        }
-    }
-
     render() {
         return (
             <ion-app>
                 {this.renderRouter()}
-                {this.renderMenu()}
-                <ion-router-outlet animated={false} id="menu-content"></ion-router-outlet>
+                <ion-split-pane content-id="menu-content" when="md">
+                    <ion-menu content-id="menu-content" swipe-gesture={false} maxEdgeStart={0} disabled={!this.loggedIn || this.startScreen === '/login'}>
+                        <ion-header>
+                            <ion-toolbar>
+                                <ion-title>Navigate</ion-title>
+                            </ion-toolbar>
+                        </ion-header>
+                        <ion-content forceOverscroll={false}>
+                            <ion-list id="menuNav">
+                                {this.appPages.map((p) => (
+                                    <ion-menu-toggle autoHide={false} id="menuItem">
+                                        <ion-item href={p.url} detail={false}>
+                                            <ion-icon slot="start" name={p.icon} id={p.id + '-icon'} color="medium"></ion-icon>
+                                            <ion-label id={p.id + '-text'} color="medium">{p.title}</ion-label>
+                                        </ion-item>
+                                    </ion-menu-toggle>
+                                ))}
+                            </ion-list>
+                        </ion-content>
+                    </ion-menu>
+                    <ion-router-outlet animated={false} id="menu-content"></ion-router-outlet>
+                </ion-split-pane>
             </ion-app>
         );
     }

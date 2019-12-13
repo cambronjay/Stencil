@@ -75,7 +75,7 @@ export class PageLogin {
     if (this.password.valid && this.username.valid) {
       await Auth.login(this.username.value);
       this.userDidLogIn.emit({ loginStatus: true });
-      navCtrl.push('/screen-fetch', 'root');
+      navCtrl.push('/home', 'root');
     }
   }
 
