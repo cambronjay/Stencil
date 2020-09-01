@@ -1,5 +1,6 @@
 import { Component, Event, EventEmitter, Prop, State, h } from '@stencil/core';
-import { Auth } from '../../providers/auth';
+import { AuthBase } from '../../providers/auth';
+import { CorpAuth } from '@lge/corp-common';
 
 @Component({
   tag: 'screen-login',
@@ -18,6 +19,10 @@ export class PageLogin {
   @Prop({ connect: 'ion-router' }) nav;
   @Prop({ connect: 'ion-menu-controller' }) menuCtrl: HTMLIonMenuControllerElement;
   @Event() userDidLogIn: EventEmitter;
+
+  constructor(){
+  }
+
   handleUsername(ev) {
     this.validateUsername();
     this.username = {
@@ -66,7 +71,7 @@ export class PageLogin {
   }
 
   async componentWillLoad() {
-    await Auth.logout();
+    await AuthBase.logout();
 }
 
 
@@ -83,7 +88,7 @@ export class PageLogin {
     this.validateUsername();
     this.submitted = true;
     if (this.password.valid && this.username.valid) {
-      await Auth.login(this.username.value);
+      await CorpAuth.authenticateUser(this.username.value, this.password.value);
       this.userDidLogIn.emit({ loginStatus: true });
       navCtrl.push('/home', 'root');
     }
@@ -92,7 +97,7 @@ export class PageLogin {
   async onSingleSignOn(e) {
     e.preventDefault();
     e.stopPropagation();
-    await Auth.singleSignOn();
+    await AuthBase.singleSignOn();
   }
 
   render() {

@@ -57,4 +57,4 @@ export class AuthController {
 
 }
 
-export const Auth = new AuthController();
+export const AuthBase = new AuthController();

@@ -1,10 +1,10 @@
 import '@ionic/core';
 import { Component, Element, Listen, Prop, State, h } from '@stencil/core';
-import { Auth } from '../../providers/auth';
+import { AuthBase } from '../../providers/auth';
 import { Utils } from '../../providers/utils';
 import { Storage } from '../../providers/storage';
 import { Plugins } from '@capacitor/core';
-
+import { CorpCommon, CorpStorage } from '@lge/corp-common';
 const { SplashScreen } = Plugins;
 
 @Component({
@@ -19,7 +19,19 @@ export class AppRoot {
     private router: HTMLIonRouterElement;
     @State() startScreen: any;
     @State() menuEnabled = false;
-
+    public environment = {
+        driverType: ['localstorage'],
+        production: false,
+        isDevice: false,
+        MVC_URL: "https://m.lkedev.com/GITTMVC",
+        API_URL: "https://m.lkedev.com",
+        PICTURE_MVC: "https://m.lkedev.com/gittmvc",
+        APP_NAME: "GITT-Dev",
+        APPLICATION_ID: "GITT",
+        MVC_DATA_CONTEXT: "AppData",
+        USE_CREDENTIALS: false,
+        OFFLINE_DATABASE_NAME: "GITT_dev_db"
+      };
     appPages = [
         {
             title: 'Home',
@@ -41,7 +53,13 @@ export class AppRoot {
         }
     ];
 
+    constructor() {
+
+    }
+
     async componentWillLoad() {
+        CorpCommon.initialize(this.environment.APPLICATION_ID, this.environment.MVC_URL, this.environment.MVC_DATA_CONTEXT, this.environment.USE_CREDENTIALS, this.environment.API_URL);
+        CorpStorage.openStore(this.environment.OFFLINE_DATABASE_NAME, 'data_store');
         this.isLargeScreen = Utils.isLargeScreen();
         this.startScreen = await Storage.get("CurrentScreen");
         if (this.startScreen == null) {
@@ -70,12 +88,12 @@ export class AppRoot {
     }
 
     async checkLoginStatus() {
-        const loggedIn = this.loggedIn = await Auth.isLoggedIn();
+        const loggedIn = this.loggedIn = await AuthBase.isLoggedIn();
         return loggedIn;
     }
 
     async logout() {
-        await Auth.logout();
+        await AuthBase.logout();
         this.loggedIn = false;
     }
 
